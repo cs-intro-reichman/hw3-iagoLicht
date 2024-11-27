@@ -49,9 +49,8 @@ public class LoanCalc {
 		while (endBalance(loan, rate, n, payment) > epsilon) {
 			payment++;
 			iterationCounter++;
-
 		}
-
+		
 		return payment;
 	}
 
@@ -69,14 +68,14 @@ public class LoanCalc {
 
 		while (Math.abs(endBalanceBisect) > epsilon) {
 			payment = (right + left) / 2;
-			endBalanceBisect = endBalance(loan, rate, n, epsilon);
+			endBalanceBisect = endBalance(loan, rate, n, payment);
 			if (endBalanceBisect> epsilon) {
 				left = payment;
 			}
 			else {
 				right = payment;
 			}
-			iterationCounter ++;
+			iterationCounter++;
 		}
-			;return payment;
+		return payment;
 }}
