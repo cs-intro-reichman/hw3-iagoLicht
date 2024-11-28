@@ -97,7 +97,7 @@ public static int div(int x1, int x2) {
     }
 
     
-    return resultSign * count;
+    return  times(resultSign, count);
 }
 
 
