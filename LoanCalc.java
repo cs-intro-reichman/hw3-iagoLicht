@@ -11,7 +11,7 @@ public class LoanCalc {
 		// Gets the loan data
 		double loan = Double.parseDouble(args[0]);
 		double rate = Double.parseDouble(args[1]);
-		Integer n = Integer.parseInt(args[2]);
+		int n = Integer.parseInt(args[2]);
 		System.out.println("Loan = " + loan + ", interest rate = " + rate + "%, periods = " + n);
 
 		// Computes the periodical payment using brute force search
@@ -47,11 +47,12 @@ public class LoanCalc {
 		// Replace the following statement with your code
 		double payment = 1;
 		while (endBalance(loan, rate, n, payment) > epsilon) {
-			payment++;
+			payment += 0.001;
 			iterationCounter++;
 		}
-		
+
 		return payment;
+
 	}
 
 	// Uses bisection search to compute an approximation of the periodical payment
@@ -63,19 +64,19 @@ public class LoanCalc {
 		// Replace the following statement with your code
 		double right = loan * (1 + rate / 100);
 		double left = 0.0;
-		double payment = 1;
+		double payment = (right + left) / 2;
 		double endBalanceBisect = 1 + epsilon;
 
 		while (Math.abs(endBalanceBisect) > epsilon) {
 			payment = (right + left) / 2;
 			endBalanceBisect = endBalance(loan, rate, n, payment);
-			if (endBalanceBisect> epsilon) {
+			if (endBalanceBisect > 0) {
 				left = payment;
-			}
-			else {
+			} else {
 				right = payment;
 			}
 			iterationCounter++;
 		}
 		return payment;
-}}
+	}
+}
