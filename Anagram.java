@@ -29,11 +29,26 @@ public class Anagram {
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
-		{
+		str1 = removeSpace(preProcess(str1));
+		str2 = removeSpace(preProcess(str2));
+		if (str1.length() != str2.length())
+			return false;
+
+		for (int i = 0; i < str1.length(); i++) {
+			int count1 = 0;
+			int count2 = 0;
+			char c = str1.charAt(i);
+			for (int j = 0; j < str1.length(); j++) {
+				if (str1.charAt(j) == c)
+					count1++;
+				if (str2.charAt(j) == c)
+					count2++;
+			}
+			if (count1 != count2)
+				return false;
 
 		}
-		return false;
+		return true;
 	}
 
 	// Returns a preprocessed version of the given string: all the letter characters
@@ -42,39 +57,43 @@ public class Anagram {
 	// which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-
-		String newWord = "";
+		String lowerCase = "";
 		for (int i = 0; i < str.length(); i++) {
-			if (((str.charAt(i) >= 65) && (str.charAt(i) <= 90)) || (str.charAt(i) >= 97) && (str.charAt(i) <= 122)) {
-				newWord = newWord + str.charAt(i);
+			char c = str.charAt(i);
+			if (c >= 'A' && c <= 'Z') {
+				String change = "" + (char) (c + 32);
+				lowerCase = lowerCase + change;
+			} else if ((c >= 'a' && c <= 'z') || c == ' ') {
+				lowerCase = lowerCase + c;
 			}
 		}
+		return lowerCase;
+	}
 
-		newWord = newWord.toLowerCase();
-		return newWord;
+	public static String removeSpace(String str) {
+		String noSpace = "";
+		for (int i = 0; i < str.length(); i++) {
+			char c = str.charAt(i);
+			if (c != ' ') {
+				noSpace += c;
+			}
+
+		}
+		return noSpace;
 	}
 
 	// Returns a random anagram of the given string. The random anagram consists of
 	// the same
 	// characters as the given string, re-arranged in a random order.
 	public static String randomAnagram(String str) {
-		String randomAn = "";
-		while (str.length() > 0) {
-			int i = ((int) (Math.random() * str.length()));
-			randomAn += str.charAt(i);
-			if (i == 0) {
-				str = str.substring(1);
-			}
-			else if(i==str.length()-1){
-			str= str.substring(0,(i-1));
-			} else{ 
-				str = str.substring(0,(i-1)) + (str.substring(i+1));
-			}
-			
+		String theRandom = "";
+		int theLength = str.length();
+		for (int i = 0; i < theLength; i++) {
+			int index = (int) (Math.random() * str.length());
+			theRandom = theRandom + str.charAt(index);
+			str = str.substring(0, index) + str.substring(index + 1);
 		}
 
-		
-
-		return randomAn;
+		return theRandom;
 	}
 }
