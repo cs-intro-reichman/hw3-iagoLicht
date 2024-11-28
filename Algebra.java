@@ -45,6 +45,9 @@ public class Algebra {
 		for (int i = 0; i < x2; i++) {
 			result--;
 		}
+		for( int i =0 ; i>x2; i --){
+			result ++;
+		}
 		return result;
 	}
 
@@ -54,6 +57,10 @@ public class Algebra {
 		for (int i = 0; i < x2; i++) {
 			result = plus(result, x1);
 		}
+		for (int i = 0; i > x2; i--){
+		result = minus(result, x1);	
+		}
+		
 		return result;
 	}
 
@@ -72,14 +79,33 @@ public static int pow(int x, int n) {
 
 // Returns the integer part of x1 / x2
 public static int div(int x1, int x2) {
-	int count = 0;
-	while (x1 >= x2) {
-		x1 = minus(x1, x2);
-		count++;
+	int resultSign = 1;
+    if ((x1 < 0 && x2 > 0) || (x1 > 0 && x2 < 0)) {
+        resultSign = -1; 
+    }
 
-	}
-	return count;
+    int count = 0;
+    
+    
+    while (x1 >= x2 || x1 <= -x2) {
+        if (x1 > 0) {
+            x1 -= x2 ;  
+        } else {
+            x1 += x2; 
+        }
+        count++;
+    }
+
+    
+    return resultSign * count;
 }
+
+
+
+
+
+
+
 
 // Returns x1 % x2
 public static int mod(int x1, int x2) {
